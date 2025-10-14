@@ -1,3 +1,4 @@
+[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/rcG_b76H)
 # Fundamental of Artificial Intelligence - Phase 1 Projects
 
 This repository contains three distinct AI projects covering fundamental concepts in search algorithms, machine learning, and optimization techniques.
