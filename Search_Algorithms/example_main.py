@@ -1,4 +1,4 @@
-from env.env import play, CountingGameState
+from env.env import play
 from UCS_Al.UCS import unc
 
 
