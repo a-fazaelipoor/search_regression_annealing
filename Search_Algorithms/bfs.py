@@ -70,4 +70,4 @@ def bfs(initial_state):
     return []  # No solution found
 
 if __name__ == "__main__":
-    play("map_name", bfs, delay=500)
+    play("easy", bfs, delay=500)
