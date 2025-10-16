@@ -1,6 +1,7 @@
 from env.env import play
-from UCS_Al.UCS import unc
+from UCS_Al.UCS import ucs
+from BFS_Al.BFS import bfs
 
 
 if __name__ == "__main__":
-    play('easy', unc, delay=500)
+    play('easy', bfs, delay=500)

@@ -10,7 +10,7 @@ def getDir( direction):
     else:
         return 'R'
 
-def unc(start_state):
+def ucs(start_state):
     all_goals = frozenset(start_state.get_targets_positions())
     start_pos = start_state.get_agent_position()
     start_key = (start_pos, all_goals)
@@ -22,7 +22,6 @@ def unc(start_state):
 
     costs = {start_key: 0}
     parents = {start_key: None}  # parent maps key -> parent_key
-    key_to_state = {start_key: start_state}  # map key -> actual state object (for successors)
     visited = set()
 
     final_key = None
@@ -49,7 +48,6 @@ def unc(start_state):
             # ensure parents/costs keyed for final_key; associate state_obj (current)
             costs[final_key] = cost
             parents[final_key] = parents.get(curr_key, None)
-            key_to_state[final_key] = state_obj
             break
 
         # expand successors using the actual state object
@@ -74,7 +72,6 @@ def unc(start_state):
             if new_cost < costs.get(next_key, float('inf')):
                 costs[next_key] = new_cost
                 parents[next_key] = curr_key
-                key_to_state[next_key] = next_state
                 heapq.heappush(heap, (new_cost, next(counter), next_pos, next_remaining, next_state))
 
     path_keys = []
