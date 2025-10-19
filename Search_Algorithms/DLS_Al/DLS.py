@@ -1,4 +1,4 @@
-def getDir( direction):
+def get_dir(direction):
     if direction == (-1 , 0):
         return 'U'
     elif direction == (1 , 0):
@@ -15,6 +15,7 @@ def dls(start_state , limit = 1000):
 
     path_set = set()
 
+    #recursive dfs 
     def dfs(curr_state, remaining_goals, depth):
         curr_pos = curr_state.get_agent_position()
         key = (curr_pos, remaining_goals)
@@ -49,7 +50,7 @@ def dls(start_state , limit = 1000):
             #if we had solution dfs return a list that may have nothing(last goal) or a path
             if res is not None:
                 direction = (next_pos[0] - curr_pos[0], next_pos[1] - curr_pos[1])
-                move = getDir(direction)
+                move = get_dir(direction)
                 path_set.remove(key)
                 return [move] + res
 

@@ -1,6 +1,6 @@
 from collections import deque
 
-def getDir( direction):
+def get_dir(direction):
     if direction == (-1 , 0):
         return 'U'
     elif direction == (1 , 0):
@@ -15,7 +15,7 @@ def bfs(start_state):
     start_pos = start_state.get_agent_position()
     start_key = (start_pos, all_goals)
 
-    # queue entries: (state_obj, remaining_goals_frozenset)
+    # queue entries: (state_obj, remaining_goals)
     queue = deque()
     queue.append((start_state, all_goals))
 
@@ -46,7 +46,6 @@ def bfs(start_state):
 
         # expand successors (treat each successor as one step)
         for action in state_obj.get_successors():
-            # assume action tuple: (action_obj, maybe_cost, next_state_obj)
             next_state = action[2]
             next_pos = next_state.get_agent_position()
 
@@ -76,6 +75,6 @@ def bfs(start_state):
         prev_pos = path_keys[i - 1][0]
         cur_pos = path_keys[i][0]
         direction = (cur_pos[0] - prev_pos[0], cur_pos[1] - prev_pos[1])
-        actions.append(getDir(direction))
+        actions.append(get_dir(direction))
 
     return actions

@@ -1,6 +1,6 @@
 import heapq ,itertools
 
-def getDir( direction):
+def get_dir(direction):
     if direction == (-1 , 0):
         return 'U'
     elif direction == (1 , 0):
@@ -51,12 +51,9 @@ def ucs(start_state):
             break
 
         # expand successors using the actual state object
-        # Note: ensure key_to_state[curr_key] exists (it should)
-        actual_state = state_obj  # key_to_state.get(curr_key)
+        actual_state = state_obj
 
         for action in actual_state.get_successors():
-            # assuming action is (action_obj, action_cost?, next_state_obj)
-            # many APIs: action = (action_name, cost, next_state)
             next_state = action[2]
             next_pos = next_state.get_agent_position()
             next_remaining = new_remaining
@@ -86,6 +83,6 @@ def ucs(start_state):
         prev_pos = path_keys[i - 1][0]
         cur_pos = path_keys[i][0]
         direction = (cur_pos[0] - prev_pos[0], cur_pos[1] - prev_pos[1])
-        actions.append(getDir(direction))
+        actions.append(get_dir(direction))
 
     return actions

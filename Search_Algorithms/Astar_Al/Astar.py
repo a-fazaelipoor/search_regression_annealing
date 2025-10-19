@@ -1,7 +1,7 @@
 import heapq
 import itertools
 
-def getDir(direction):
+def get_dir(direction):
     if direction == (-1, 0):
         return 'U'
     elif direction == (1, 0):
@@ -11,13 +11,13 @@ def getDir(direction):
     else:
         return 'R'
 def astar(start_state):
-    def manhattanDistance(pos1 , pos2):
+    def manhattan_distance(pos1 , pos2):
         return abs(pos1[0] - pos2[0]) + abs(pos1[1] - pos2[1])
 
     def heuristic(new_position , new_remaining_ , new_state ,wall_penalty = 4,step_cost_ = 5):
          c = float('inf')
          for goal in new_remaining_:
-             distance = manhattanDistance(new_position , goal)
+             distance = manhattan_distance(new_position , goal)
              punishment =0
              for wall in new_state.get_rocks_positions():
                  if (min(new_position[0],goal[0]) <= wall[0] <= max(new_position[0],goal[0])) and (min(new_position[1],goal[1]) <= wall[1] <= max(new_position[1],goal[1])) :
@@ -32,7 +32,7 @@ def astar(start_state):
     start_key = (start_pos, all_goals)
 
     counter = itertools.count()
-    # heap entries: (how many goal remaining,cost, tie, pos_tuple, remaining_goals, state_obj)
+    # heap entries: (how many goal remaining,actual cost, heuristic cost , tie, pos_tuple, remaining_goals, state_obj)
     #tie = when there is equal costs
     heap = [(len(all_goals),0, float('inf'),next(counter), start_pos, all_goals, start_state)]
 
@@ -67,12 +67,9 @@ def astar(start_state):
             break
 
         # expand successors using the actual state object
-        # Note: ensure key_to_state[curr_key] exists (it should)
-        actual_state = state_obj  # key_to_state.get(curr_key)
+        actual_state = state_obj
 
         for action in actual_state.get_successors():
-            # assuming action is (action_obj, action_cost?, next_state_obj)
-            # many APIs: action = (action_name, cost, next_state)
             next_state = action[2]
             next_pos = next_state.get_agent_position()
             next_remaining = new_remaining
@@ -105,6 +102,6 @@ def astar(start_state):
         prev_pos = path_keys[i - 1][0]
         cur_pos = path_keys[i][0]
         direction = (cur_pos[0] - prev_pos[0], cur_pos[1] - prev_pos[1])
-        actions.append(getDir(direction))
+        actions.append(get_dir(direction))
 
     return actions
