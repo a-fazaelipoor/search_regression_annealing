@@ -80,3 +80,47 @@ def get_all_neighbors(state):
             # Add the neighbor to the list
             neighbors.append(neighbor)
     return neighbors
+
+def hill_climbing_descent(genomes, initial_state, max_iterations=1000):
+    ##################################################################
+    # Implement the Hill Climbing (descent) algorithm.               #
+    # [inputs]                                                       #
+    #  - genomes: a 2D numpy array representing the set of DNAs      #
+    #  - initial_state: the state to start with                      #
+    #  - max_iterations: a limit to prevent infinite loops           #
+    # [outputs]                                                      #
+    #  - best state found as a numpy array                           #
+    #  - best state's evaluation value                               #
+    #  - all the evaluations of current state as a normal list       #
+    ##################################################################
+    current_state = initial_state
+    evaluations = [] # Store the history of costs for plotting
+    current_value = float('inf')
+    
+    for iteration in range(max_iterations):
+        # Evaluate the current state
+        current_value = calculate_evaluation(genomes, current_state)
+        evaluations.append(current_value)
+        
+        # Get all neighbors of the current state
+        neighbors = get_all_neighbors(current_state)
+        
+        # Find the neighbor with the minimum evaluation value
+        best_neighbor_value = float('inf')
+        best_neighbor = None
+        for neighbor in neighbors:
+            neighbor_value = calculate_evaluation(genomes, neighbor)
+            if neighbor_value < best_neighbor_value:
+                best_neighbor_value = neighbor_value
+                best_neighbor = neighbor
+        
+        # If no better neighbor is found, stop
+        if best_neighbor is None or best_neighbor_value >= current_value:
+            break
+        
+        # Move to the better neighbor
+        current_state = best_neighbor
+        current_value = best_neighbor_value
+    
+    # Return the final state, its cost, and the history of costs
+    return current_state, current_value, evaluations
