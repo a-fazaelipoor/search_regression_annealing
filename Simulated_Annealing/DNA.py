@@ -52,3 +52,31 @@ def get_neighbor_state(state):
     # Update the neighbor state with the new character at the selected index
     neighbor[index] = new_char
     return neighbor
+
+def get_all_neighbors(state):
+    ##################################################################
+    # This function should generate and return a list of all         #
+    # possible neighbors for a given state. A neighbor is defined    #
+    # as a sequence that differs from the original state by exactly  #
+    # one character.                                                 #
+    # [inputs]                                                       #
+    #  - state: a 1D numpy array representing the current state      #
+    # [outputs]                                                      #
+    #  - a list of all neighboring states                            #
+    ##################################################################
+    neighbors = []
+    # Iterate over each position in the state
+    for i in range(len(state)):
+        # Get the current character at position i
+        current_char = state[i]
+        # Get all possible characters except the current one
+        possible_chars = Alphabet[Alphabet != current_char]
+        # For each possible character, create a new neighbor
+        for char in possible_chars:
+            # Create a copy of the state
+            neighbor = state.copy()
+            # Change the character at position i to the new character
+            neighbor[i] = char
+            # Add the neighbor to the list
+            neighbors.append(neighbor)
+    return neighbors
