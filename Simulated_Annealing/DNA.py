@@ -28,3 +28,27 @@ def calculate_evaluation(genomes, state):
     distances = np.sum(genomes != state, axis=1)
     # Return the maximum Hamming distance
     return np.max(distances)
+
+def get_neighbor_state(state):
+    ##################################################################
+    # [inputs]                                                       #
+    # state is a 1D numpy array which represents a state             #
+    # [outputs]                                                      #
+    # a neighboring state of input is returned                       #
+    # [notice]                                                       #
+    # note the the same state as the input should not be returned    #
+    # and the neighbor should be selected uniformly at random        #
+    ##################################################################
+    # Create a copy of the state to avoid modifying the original
+    neighbor = state.copy()
+    # Randomly select an index to modify
+    index = np.random.randint(0, len(state))
+    # Get the current character at the selected index
+    current_char = state[index]
+    # Create a list of possible characters excluding the current one
+    possible_chars = Alphabet[Alphabet != current_char]
+    # Randomly select a new character from the possible characters
+    new_char = np.random.choice(possible_chars)
+    # Update the neighbor state with the new character at the selected index
+    neighbor[index] = new_char
+    return neighbor
