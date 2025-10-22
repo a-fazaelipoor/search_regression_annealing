@@ -124,3 +124,63 @@ def hill_climbing_descent(genomes, initial_state, max_iterations=1000):
     
     # Return the final state, its cost, and the history of costs
     return current_state, current_value, evaluations
+
+def simulated_annealing(genomes, initial_state, alpha, initial_temp, max_iteration, min_temperature):
+    ##############################################################################
+    # [inputs]                                                                   #
+    # genomes is a 2D numpy array and represents the set of DNAs                 #
+    # initial state is the state to start with                                   #
+    # alpha is the temperature decay rate                                        #
+    # initial temp is T0                                                         #
+    # max_iteration is the maximum number of iteration (termination condition)   #
+    # min_temperature is the minimum temperature (termination condition)         #
+    # [outputs]                                                                  #
+    # best state found as a numpy array                                          #
+    # best state's evaluation value                                              #
+    # all the evaluations of current state as a normal list                      #
+    ##############################################################################
+    curr_state = initial_state
+    i = 0
+    temperature = initial_temp
+    evaluations = []
+    best_state = None
+    best_value = float('inf')
+    
+    # Evaluate initial state
+    curr_value = calculate_evaluation(genomes, curr_state)
+    evaluations.append(curr_value)
+    best_state = curr_state.copy()
+    best_value = curr_value
+    
+    while i < max_iteration and temperature > min_temperature:
+        # Generate a random neighbor
+        neighbor_state = get_neighbor_state(curr_state)
+        
+        # Evaluate neighbor
+        neighbor_value = calculate_evaluation(genomes, neighbor_state)
+        
+        # Calculate delta f (should be positive for worse moves)
+        delta_f = neighbor_value - curr_value
+        
+        # Acceptance probability
+        if delta_f < 0 or np.random.random() < np.exp(-delta_f / temperature):
+            # Accept the move
+            curr_state = neighbor_state
+            curr_value = neighbor_value
+        # else: reject the move (curr_state remains the same)
+        
+        # Update best solution
+        if curr_value < best_value:
+            best_state = curr_state.copy()
+            best_value = curr_value
+        
+        # Record current evaluation
+        evaluations.append(curr_value)
+        
+        # Update temperature (geometric cooling)
+        temperature *= alpha
+        
+        # Increment iteration counter
+        i += 1
+    
+    return best_state, best_value, evaluations
