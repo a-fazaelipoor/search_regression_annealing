@@ -24,8 +24,10 @@ def calculate_evaluation(genomes, state):
     # [outputs]                                                      #
     # the function returns the value of f(a)                         #
     ##################################################################
+    # Convert genomes to 2D numpy array
+    genomes_array = np.array(genomes)
     # Compute Hamming distance between state and each genome
-    distances = np.sum(genomes != state, axis=1)
+    distances = np.sum(genomes_array != state, axis=1)
     # Return the maximum Hamming distance
     return np.max(distances)
 
@@ -184,3 +186,4 @@ def simulated_annealing(genomes, initial_state, alpha, initial_temp, max_iterati
         i += 1
     
     return best_state, best_value, evaluations
+
