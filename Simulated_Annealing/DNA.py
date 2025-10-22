@@ -139,3 +139,40 @@ for genomes in genomes_array:
     print(f'Hill Climbing       found solution {result_dna_hc} with value {result_value_hc} in {time_hc*1000:.3f} ms')
     print(f'Brute Force         found solution {result_dna_bf} with value {result_value_bf} in {time_bf*1000:.3f} ms')
     print("-" * 50)
+
+example_genomes = np.array([
+    ['c', 'c', 'a', 'c', 't', 'a', 'g', 'g', 'a'],
+    ['c', 't', 'a', 'g', 't', 'c', 't', 'g', 'a'],
+    ['c', 't', 'c', 'c', 't', 'c', 'c', 'g', 'a']
+])
+initial_state = initialize_state(len(example_genomes[0]))
+
+_, _, evaluations_sa = simulated_annealing(example_genomes, initial_state, 0.95, 500, 1000, 1e-3)
+_, _, evaluations_hc = hill_climbing_descent(example_genomes, initial_state)
+
+plt.plot(evaluations_sa, label='Simulated Annealing')
+plt.plot(evaluations_hc, label='Hill Climbing')
+plt.title('Algorithm Comparison')
+plt.ylabel('Evaluation Value (Radius)')
+plt.xlabel('Iteration')
+plt.legend()
+plt.show()
+
+def draw_results(evaluations):
+    plt.plot(evaluations)
+    plt.title('Simulated Annealing algorithm')
+    plt.ylabel('value')
+    plt.xlabel('iteration')
+    plt.show()
+
+result_dna, result_value, evaluations = simulated_annealing(example_genomes, initial_state, 0.9, 500, 1000, 1e-3)
+print(f'results: {result_dna} and radius: {result_value}')
+draw_results(evaluations)
+
+result_dna, result_value, evaluations = simulated_annealing(example_genomes, initial_state, 0.8, 500, 1000, 1e-3)
+print(f'results: {result_dna} and radius: {result_value}')
+draw_results(evaluations)
+
+result_dna, result_value, evaluations = simulated_annealing(example_genomes, initial_state, 0.95, 500, 1000, 1e-3)
+print(f'results: {result_dna} and radius: {result_value}')
+draw_results(evaluations)
