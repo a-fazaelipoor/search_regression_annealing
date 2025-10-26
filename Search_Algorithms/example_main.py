@@ -6,4 +6,4 @@ from Astar_Al.Astar import astar
 
 
 if __name__ == "__main__":
-    play('hard', astar, delay=500)
+    play('medium', astar, delay=500)
