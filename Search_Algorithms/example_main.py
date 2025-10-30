@@ -1,11 +1,9 @@
 from env.env import play
+from UCS_Al.UCS import ucs
+from BFS_Al.BFS import bfs
+from DLS_Al.DLS import dls
+from Astar_Al.Astar import astar
 
-def bfs(state):
-    actions = []
-
-    # Implement Search algorithm here
-
-    return actions
 
 if __name__ == "__main__":
-    play('easy', bfs, delay=500)
+    play('hard', astar, delay=50)
